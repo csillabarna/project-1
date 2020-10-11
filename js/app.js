@@ -5,6 +5,7 @@ const reset = document.querySelector('#reset')
 const grid = document.querySelector('.grid')
 const width = 5
 const cells = []
+const colors = ['red', 'green', 'blue']
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
@@ -14,13 +15,13 @@ for (let i = 0; i < width ** 2; i++) {
   cells.push(div)
 }
 // fill every cell with random colors
-function colorFill() {
-  cells.forEach((cell) => {
-    const colors = ['red', 'green', 'blue']
+function colorFill(array) {
+  array.forEach((cell, i) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length)
     const randomColor = colors[randomColorIndex]
     cell.classList.add(randomColor)
-    // console.log(Array.from(cell.classList))
+
+    console.log(`random fill on ${i} ${randomColor}`)
   })
 }
 // remove all classes from cell
@@ -83,9 +84,11 @@ function match3Column() {
 // start button event listener
 
 start.addEventListener('click', () => {
-  colorFill()
-  match3Row()
-  match3Column()
+  colorFill(cells)
+  rowRemoveAndFill(10)
+
+
+  // match3Column()
 })
 
 
@@ -93,3 +96,66 @@ start.addEventListener('click', () => {
 reset.addEventListener('click', () => {
   clear()
 })
+
+// function rowRemoveAndFill() {
+//   cells.forEach((cell, i) => {
+//     if ((i % width === width - 2) || (i % width === width - 1)) {
+//       console.log(`ignoring i ${i}`)
+//     } else {
+//       const first = cells[i].classList[0]
+//       // console.log(first)
+//       const second = cells[i + 1].classList[0]
+//       // console.log(second)
+//       const third = cells[i + 2].classList[0]
+//       // console.log(third)
+//       const treeCellClass = [first, second, third]
+//       console.log(`removed, ${i} ${cell.classList}`)
+//       cell.classList.remove(first)
+//     }
+
+//   })
+
+// }
+// rowRemoveAndFill()
+
+// cells.forEach((cell) => {
+//   const colors = ['red', 'green', 'blue']
+//   const randomColorIndex = Math.floor(Math.random() * colors.length)
+//   const randomColor = colors[randomColorIndex]
+//   cell.classList.add(randomColor)
+//   // console.log(Array.from(cell.classList))
+// })
+
+
+
+function rowRemoveAndFill(index) {
+
+  for (let i = index; i >= 0; i -= width) {
+    const first = cells[i].classList[0]
+    const second = cells[i + 1].classList[0]
+    const third = cells[i + 2].classList[0]
+    const arrayOfThree = [cells[i], cells[i + 1], cells[i + 2]]
+
+    if (i < width) {
+      console.log(i, first, second, third)
+      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
+      colorFill(arrayOfThree)
+    } else {
+
+      const newFirst = cells[i - width].classList[0]
+      const newSecond = cells[(i + 1) - width].classList[0]
+      const newThird = cells[(i + 2) - width].classList[0]
+
+      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
+      console.log(i, first, second, third)
+
+      cells[i].classList.add(newFirst), cells[i + 1].classList.add(newSecond), cells[i + 2].classList.add(newThird)
+      console.log(newFirst, newSecond, newThird)
+    }
+
+  }
+
+}
+
+
+
