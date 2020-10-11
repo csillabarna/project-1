@@ -85,8 +85,8 @@ function match3Column() {
 
 start.addEventListener('click', () => {
   colorFill(cells)
-  rowRemoveAndFill(10)
-
+  // rowRemoveAndFill(10)
+  columnRemoveAndFill(10)
 
   // match3Column()
 })
@@ -159,3 +159,34 @@ function rowRemoveAndFill(index) {
 
 
 
+function columnRemoveAndFill(index) {
+
+  for (let i = index; i < width ** 2; i += width) {
+    const first = cells[i].classList[0]
+
+    const second = cells[i + width].classList[0]
+
+    const third = cells[i + width * 2].classList[0]
+    const arrayOfThree = [cells[i], cells[i + 1], cells[i + 2]]
+
+    if (i < width) {
+      console.log(i, first, second, third)
+      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
+      colorFill(arrayOfThree)
+    } else {
+
+      const newFirst = cells[i - (width * 3)].classList[0]
+      console.log(newFirst)
+      const newSecond = cells[(i + 1) + (width * 3)].classList[0]
+
+
+      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
+      console.log(i, first, second, third)
+
+      cells[i].classList.add(newFirst), cells[i + 1].classList.add(newSecond), cells[i + 2].classList.add(randomColor)
+      console.log(newFirst, newSecond)
+    }
+
+  }
+
+}
