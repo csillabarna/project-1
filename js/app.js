@@ -32,24 +32,42 @@ function clear() {
     // }
   })
 }
+
 // start button event listener
 
+function disableBtn() {
+  start.disabled = true
+}
+function enableBtn() {
+  start.disabled = false
+}
 start.addEventListener('click', () => {
   randomColorFill(cells)
-  match3AndFill()
-  // columnRemoveAndFill(3)
-  // match3Column()
+  // setTimeout(() => match3AndFillR(), 3000)
+
+
+  function hasMatches() {
+    return match3Column() || match3Row()
+  }
+
+  while (hasMatches()) {
+    match3AndFillR()
+    match3AndFillC()
+  }
+
+  disableBtn()
 })
 
 
 // reset button event listener remove all classes 
 reset.addEventListener('click', () => {
   clear()
+  enableBtn()
 })
 
 
 
-function match3AndFill() {
+function match3AndFillR() {
 
   let hasRowMatch = true
 
@@ -62,12 +80,11 @@ function match3AndFill() {
         console.log(`ignoring i ${i}`)
       } else {
         const first = cells[i].classList[0]
-        // console.log(first)
         const second = cells[i + 1].classList[0]
-        // console.log(second)
         const third = cells[i + 2].classList[0]
-        // console.log(third)
+
         const match3R = first === second && first === third
+
         if (match3R) {
           console.log(`starting from ${i} ${first} and ${second} and ${third} are the same in the row `)
           rowRemoveAndFill(i)
@@ -79,30 +96,62 @@ function match3AndFill() {
   }
 }
 
+function match3AndFillC() {
+
+  let hasColumnMatch = true
+
+  while (hasColumnMatch) {
+    for (let i = 0; i < width ** 2; i++) {
+      if (i === (width ** 2) - 1) {
+        console.log('no more column match in the board')
+        hasColumnMatch = false
+      } else if (i >= width ** 2 - width * 2) {
+        console.log(`ignoring i ${i}`)
+      } else {
+        const first = cells[i].classList[0]
+        const second = cells[i + width].classList[0]
+        const third = cells[i + width * 2].classList[0]
+
+        const match3C = first === second && first === third
+
+        if (match3C) {
+          console.log(` starting from ${i}  ${first} and ${second} and ${third} are the same in the column `)
+          columnRemoveAndFill(i)
+          break
+        }
+
+      }
+    }
+  }
+}
+
+
+
+
 
 
 //check 3 matches in rows
-// function match3Row() {
-//   for (let i = 0; i < width ** 2; i++) {
+function match3Row() {
+  for (let i = 0; i < width ** 2; i++) {
 
-//     if ((i % width === width - 2) || (i % width === width - 1)) {
-//       console.log(`ignoring i ${i}`)
-//     } else {
-//       const first = cells[i].classList[0]
-//       // console.log(first)
-//       const second = cells[i + 1].classList[0]
-//       // console.log(second)
-//       const third = cells[i + 2].classList[0]
-//       // console.log(third)
-//       const match3R = first === second && first === third
-//       if (match3R) {
-//         console.log(`starting from ${i} ${first} and ${second} and ${third} are the same in the row `)
+    if ((i % width === width - 2) || (i % width === width - 1)) {
+      console.log(`ignoring i ${i}`)
+    } else {
+      const first = cells[i].classList[0]
+      // console.log(first)
+      const second = cells[i + 1].classList[0]
+      // console.log(second)
+      const third = cells[i + 2].classList[0]
+      // console.log(third)
+      const match3R = first === second && first === third
+      if (match3R) {
+        console.log(`starting from ${i} ${first} and ${second} and ${third} are the same in the row `)
+        return true
+      }
 
-//       }
-
-//     }
-//   }
-// }
+    }
+  }
+}
 
 //check 3 matches in columns
 function match3Column() {
@@ -121,7 +170,7 @@ function match3Column() {
       const match3C = first === second && first === third
       if (match3C) {
         console.log(` starting from ${i}  ${first} and ${second} and ${third} are the same in the column `)
-
+        return true
       }
 
     }
@@ -129,35 +178,6 @@ function match3Column() {
 
 }
 
-
-// function rowRemoveAndFill() {
-//   cells.forEach((cell, i) => {
-//     if ((i % width === width - 2) || (i % width === width - 1)) {
-//       console.log(`ignoring i ${i}`)
-//     } else {
-//       const first = cells[i].classList[0]
-//       // console.log(first)
-//       const second = cells[i + 1].classList[0]
-//       // console.log(second)
-//       const third = cells[i + 2].classList[0]
-//       // console.log(third)
-//       const treeCellClass = [first, second, third]
-//       console.log(`removed, ${i} ${cell.classList}`)
-//       cell.classList.remove(first)
-//     }
-
-//   })
-
-// }
-// rowRemoveAndFill()
-
-// cells.forEach((cell) => {
-//   const colors = ['red', 'green', 'blue']
-//   const randomColorIndex = Math.floor(Math.random() * colors.length)
-//   const randomColor = colors[randomColorIndex]
-//   cell.classList.add(randomColor)
-//   // console.log(Array.from(cell.classList))
-// })
 
 
 
