@@ -86,7 +86,7 @@ function match3Column() {
 start.addEventListener('click', () => {
   randomColorFill(cells)
   // rowRemoveAndFill(10)
-  columnRemoveAndFill(10)
+  columnRemoveAndFill(3)
 
   // match3Column()
 })
@@ -173,10 +173,9 @@ function columnRemoveAndFill(index) {
 
     // 1. special case - starting from the first row
     if (i < width) {
-      console.log(i, first, second, third, 'was in column')
+      console.log(i, first, second, third, 'has been removed')
       cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
       randomColorFill(arrayOfThree)
-      // valami nem jo mert megy tovabb nem csak az elso indexet szedi ki 
 
 
       // 2. special case - starting from the second row
@@ -186,7 +185,9 @@ function columnRemoveAndFill(index) {
       const newThird = cells[i - width].classList[0]
       cells[i + width * 2].classList.add(newThird)
       console.log(newThird, ' added as a new third color')
-
+      // remove color class from the cells from top and after assign a new random color
+      cells[i - width].classList.remove(newThird)
+      //we copyd and removed a color from cells[i] and the rest also been removed so need a new random color
       randomColorFill([cells[i - width], cells[i], cells[i + width]])
 
 
@@ -201,8 +202,11 @@ function columnRemoveAndFill(index) {
       cells[i + width].classList.add(newSecond), cells[i + width * 2].classList.add(newThird)
       console.log(newSecond, newThird, ' added as a new color')
 
-      //  we copy the color from theese cells but they will need a new random color and also and the top cell 
-      randomColorFill([cells[i], cells[i - width * 2], cells[i - width]])
+      // remove color class from the cells from top and second row and after assign a new random color
+      cells[i - width * 2].classList.remove(newSecond)
+      cells[i - width].classList.remove(newThird)
+      //  we copy the color from theese cells but they will need a new random color and also for the third cell (cell[i])
+      randomColorFill([cells[i - width * 2], cells[i - width], cells[i]])
 
     } else {
       console.log('else', i)
