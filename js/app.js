@@ -15,7 +15,7 @@ for (let i = 0; i < width ** 2; i++) {
   cells.push(div)
 }
 // fill every cell with random colors
-function colorFill(array) {
+function randomColorFill(array) {
   array.forEach((cell, i) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length)
     const randomColor = colors[randomColorIndex]
@@ -84,7 +84,7 @@ function match3Column() {
 // start button event listener
 
 start.addEventListener('click', () => {
-  colorFill(cells)
+  randomColorFill(cells)
   // rowRemoveAndFill(10)
   columnRemoveAndFill(10)
 
@@ -137,9 +137,9 @@ function rowRemoveAndFill(index) {
     const arrayOfThree = [cells[i], cells[i + 1], cells[i + 2]]
 
     if (i < width) {
-      console.log(i, first, second, third)
+      console.log(i, first, second, third, 'in row')
       cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
-      colorFill(arrayOfThree)
+      randomColorFill(arrayOfThree)
     } else {
 
       const newFirst = cells[i - width].classList[0]
@@ -161,30 +161,51 @@ function rowRemoveAndFill(index) {
 
 function columnRemoveAndFill(index) {
 
-  for (let i = index; i < width ** 2; i += width) {
+  for (let i = index; i >= 0; i -= (width * 3)) {
+
     const first = cells[i].classList[0]
-
     const second = cells[i + width].classList[0]
-
     const third = cells[i + width * 2].classList[0]
-    const arrayOfThree = [cells[i], cells[i + 1], cells[i + 2]]
+    console.log(i, first, second, third, ' in column')
+    const arrayOfThree = [cells[i], cells[i + width], cells[i + width * 2]]
+    // console.log(arrayOfThree, 'column')
 
+
+    // 1. special case - starting from the first row
     if (i < width) {
-      console.log(i, first, second, third)
-      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
-      colorFill(arrayOfThree)
+      console.log(i, first, second, third, 'was in column')
+      cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
+      randomColorFill(arrayOfThree)
+      // valami nem jo mert megy tovabb nem csak az elso indexet szedi ki 
+
+
+      // 2. special case - starting from the second row
+    } else if (i >= width && i < width * 2) {
+      cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
+      console.log(i, first, second, third, 'has been removed')
+      const newThird = cells[i - width].classList[0]
+      cells[i + width * 2].classList.add(newThird)
+      console.log(newThird, ' added as a new third color')
+
+      randomColorFill([cells[i - width], cells[i], cells[i + width]])
+
+
+      // 3. special case - starting from the third row
+    } else if (i >= width * 2 && i < width * 3) {
+
+      cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
+      console.log(i, first, second, third, 'has been removed')
+
+      const newSecond = cells[i - width * 2].classList[0]
+      const newThird = cells[i - width].classList[0]
+      cells[i + width].classList.add(newSecond), cells[i + width * 2].classList.add(newThird)
+      console.log(newSecond, newThird, ' added as a new color')
+
+      //  we copy the color from theese cells but they will need a new random color and also and the top cell 
+      randomColorFill([cells[i], cells[i - width * 2], cells[i - width]])
+
     } else {
-
-      const newFirst = cells[i - (width * 3)].classList[0]
-      console.log(newFirst)
-      const newSecond = cells[(i + 1) + (width * 3)].classList[0]
-
-
-      cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
-      console.log(i, first, second, third)
-
-      cells[i].classList.add(newFirst), cells[i + 1].classList.add(newSecond), cells[i + 2].classList.add(randomColor)
-      console.log(newFirst, newSecond)
+      console.log('else', i)
     }
 
   }
