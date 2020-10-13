@@ -72,43 +72,47 @@ reset.addEventListener('click', () => {
 
 
 cells.forEach((cell) => {
-  cell.addEventListener('click', (event) => {
+  cell.addEventListener('click', () => {
 
     if (document.querySelector('.selected')) {
-      const getFirstId = document.querySelector('.selected').getAttribute('id')
-      console.log('first selected ID is:', getFirstId)
+      const firstId = parseInt(document.querySelector('.selected').id)
+      console.log('first selected ID is:', firstId)
       const firstColor = document.querySelector('.selected').classList[0]
       console.log(firstColor)
-      const getSecondId = cell.getAttribute('id')
-      console.log('second selected ID is:', getSecondId)
+      const secondId = parseInt(cell.id)
+      console.log('second selected ID is:', secondId)
       const secondColor = cell.classList[0]
       console.log(secondColor)
       const firstCell = document.querySelector('.selected')
-      const secondCell = event.target
+      const secondCell = cell
+      if (secondId === firstId + 1
+        || secondId === firstId - 1
+        || secondId === firstId + width
+        || secondId === firstId - width
+      ) {
+        firstCell.classList.remove(firstColor)
+        firstCell.classList.add(secondColor)
 
-      firstCell.classList.remove(firstColor)
-      firstCell.classList.add(secondColor)
+        secondCell.classList.remove(secondColor)
+        secondCell.classList.add(firstColor)
 
-      secondCell.classList.remove(secondColor)
-      secondCell.classList.add(firstColor)
+      } else {
+        secondCell.classList.add('shake')
+        console.log('shake has been added')
+
+      }
 
       document.querySelector('.selected').classList.remove('selected')
       checkCrushFill()
     } else {
       cell.classList.add('selected')
+      document.querySelector('.shake').classList.remove('shake')
     }
 
   })
 })
 
 
-
-
-function swapClass() {
-
-
-
-}
 
 
 
