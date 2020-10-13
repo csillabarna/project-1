@@ -3,14 +3,17 @@ const time = document.querySelector('#time')
 const points = document.querySelector('.points')
 const reset = document.querySelector('#reset')
 const grid = document.querySelector('.grid')
-const width = 5
+const width = 8
 const cells = []
-const colors = ['red', 'green', 'blue']
+const colors = ['red', 'green', 'blue', 'pink']
+
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
   const div = document.createElement('div')
   grid.appendChild(div)
+  div.setAttribute('id', i)
+
   div.innerHTML = i //remove later
   cells.push(div)
 }
@@ -33,28 +36,29 @@ function clear() {
   })
 }
 
-// start button event listener
-
 function disableBtn() {
   start.disabled = true
 }
 function enableBtn() {
   start.disabled = false
 }
-start.addEventListener('click', () => {
-  randomColorFill(cells)
-  // setTimeout(() => match3AndFillR(), 3000)
-
-
+// main function
+function checkCrushFill() {
   function hasMatches() {
     return match3Column() || match3Row()
   }
-
   while (hasMatches()) {
     match3AndFillR()
     match3AndFillC()
   }
+}
 
+
+// start button event listener
+start.addEventListener('click', () => {
+  randomColorFill(cells)
+  // setTimeout(() => match3AndFillR(), 3000)
+  checkCrushFill()
   disableBtn()
 })
 
@@ -64,6 +68,10 @@ reset.addEventListener('click', () => {
   clear()
   enableBtn()
 })
+
+
+
+
 
 
 
@@ -126,10 +134,6 @@ function match3AndFillC() {
 }
 
 
-
-
-
-
 //check 3 matches in rows
 function match3Row() {
   for (let i = 0; i < width ** 2; i++) {
@@ -138,11 +142,8 @@ function match3Row() {
       console.log(`ignoring i ${i}`)
     } else {
       const first = cells[i].classList[0]
-      // console.log(first)
       const second = cells[i + 1].classList[0]
-      // console.log(second)
       const third = cells[i + 2].classList[0]
-      // console.log(third)
       const match3R = first === second && first === third
       if (match3R) {
         console.log(`starting from ${i} ${first} and ${second} and ${third} are the same in the row `)
@@ -160,13 +161,12 @@ function match3Column() {
 
     if (i >= width ** 2 - width * 2) {
       console.log(`ignoring i ${i}`)
+
     } else {
       const first = cells[i].classList[0]
-      // console.log(first)
       const second = cells[i + width].classList[0]
-      // console.log(second)
       const third = cells[i + width * 2].classList[0]
-      // console.log(third)
+
       const match3C = first === second && first === third
       if (match3C) {
         console.log(` starting from ${i}  ${first} and ${second} and ${third} are the same in the column `)
@@ -178,9 +178,7 @@ function match3Column() {
 
 }
 
-
-
-
+// row remove and fill
 function rowRemoveAndFill(index) {
 
   for (let i = index; i >= 0; i -= width) {
@@ -210,8 +208,7 @@ function rowRemoveAndFill(index) {
 
 }
 
-
-
+// column remove and fill
 function columnRemoveAndFill(index) {
 
   for (let i = index; i >= 0; i -= (width * 3)) {
@@ -235,6 +232,7 @@ function columnRemoveAndFill(index) {
     } else if (i >= width && i < width * 2) {
       cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
       console.log(i, first, second, third, 'has been removed')
+
       const newThird = cells[i - width].classList[0]
       cells[i + width * 2].classList.add(newThird)
       console.log(newThird, ' added as a new third color')
@@ -252,6 +250,7 @@ function columnRemoveAndFill(index) {
 
       const newSecond = cells[i - width * 2].classList[0]
       const newThird = cells[i - width].classList[0]
+
       cells[i + width].classList.add(newSecond), cells[i + width * 2].classList.add(newThird)
       console.log(newSecond, newThird, ' added as a new color')
 

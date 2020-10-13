@@ -32,8 +32,8 @@ main{
 }
 
 main div {
-  width: 20%;
-  height: 20%;
+  width: 12.5%;
+  height: 12.5%;
   border: 1px solid rgb(2, 20, 78);
 }
 
@@ -47,6 +47,9 @@ main div {
 
 .green{
   background-color: green;
+}
+.pink{
+  background-color: palevioletred;
 }
 
 .info{
