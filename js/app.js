@@ -3,9 +3,9 @@ const time = document.querySelector('#time')
 const points = document.querySelector('.points')
 const reset = document.querySelector('#reset')
 const grid = document.querySelector('.grid')
-const width = 8
+const width = 5
 const cells = []
-const colors = ['red', 'green', 'blue', 'pink']
+const colors = ['red', 'green', 'blue']
 
 
 // create the grid
@@ -68,6 +68,52 @@ reset.addEventListener('click', () => {
   clear()
   enableBtn()
 })
+
+
+
+cells.forEach((cell) => {
+  cell.addEventListener('click', (event) => {
+
+    if (document.querySelector('.selected')) {
+      const getFirstId = document.querySelector('.selected').getAttribute('id')
+      console.log('first selected ID is:', getFirstId)
+      const firstColor = document.querySelector('.selected').classList[0]
+      console.log(firstColor)
+      const getSecondId = cell.getAttribute('id')
+      console.log('second selected ID is:', getSecondId)
+      const secondColor = cell.classList[0]
+      console.log(secondColor)
+      const firstCell = document.querySelector('.selected')
+      const secondCell = event.target
+
+      firstCell.classList.remove(firstColor)
+      firstCell.classList.add(secondColor)
+
+      secondCell.classList.remove(secondColor)
+      secondCell.classList.add(firstColor)
+
+      document.querySelector('.selected').classList.remove('selected')
+      checkCrushFill()
+    } else {
+      cell.classList.add('selected')
+    }
+
+  })
+})
+
+
+
+
+function swapClass() {
+
+
+
+}
+
+
+
+
+
 
 
 
