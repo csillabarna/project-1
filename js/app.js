@@ -7,6 +7,7 @@ const width = 5
 const cells = []
 let selected = -1
 const colors = ['red', 'green', 'blue']
+const crush3Points = 3
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
@@ -43,13 +44,13 @@ function enableBtn() {
   start.disabled = false
 }
 // main function
-function checkCrushFill() {
+function checkCrushFill(countPoints) {
   function hasMatches() {
     return match3Column() || match3Row()
   }
   while (hasMatches()) {
-    match3AndFillR()
-    match3AndFillC()
+    match3AndFillR(countPoints)
+    match3AndFillC(countPoints)
   }
 }
 
@@ -58,8 +59,9 @@ function checkCrushFill() {
 start.addEventListener('click', () => {
   randomColorFill(cells)
   // setTimeout(() => match3AndFillR(), 3000)
-  checkCrushFill()
+  checkCrushFill(false)
   disableBtn()
+
 })
 
 
@@ -247,7 +249,7 @@ cells.forEach((cell) => {
 
         secondCell.classList.remove(secondColor)
         secondCell.classList.add(firstColor)
-        checkCrushFill()
+        checkCrushFill(true)
         console.log('Finished')
       } else {
         secondCell.classList.add('shake')
@@ -281,7 +283,7 @@ cells.forEach((cell) => {
 
 
 
-function match3AndFillR() {
+function match3AndFillR(countPoints) {
   console.log('Filling row matches')
 
   let hasRowMatch = true
@@ -302,7 +304,7 @@ function match3AndFillR() {
 
         if (match3R) {
           console.log(`starting from ${i} ${first} and ${second} and ${third} are the same in the row `)
-          rowRemoveAndFill(i)
+          rowRemoveAndFill(i, countPoints)
           break
         }
 
@@ -311,7 +313,7 @@ function match3AndFillR() {
   }
 }
 
-function match3AndFillC() {
+function match3AndFillC(countPoints) {
   console.log('Filling column matches')
 
   let hasColumnMatch = true
@@ -332,7 +334,7 @@ function match3AndFillC() {
 
         if (match3C) {
           console.log(` starting from ${i}  ${first} and ${second} and ${third} are the same in the column `)
-          columnRemoveAndFill(i)
+          columnRemoveAndFill(i, countPoints)
           break
         }
 
@@ -389,8 +391,10 @@ function match3Column() {
 }
 
 // row remove and fill
-function rowRemoveAndFill(index) {
-
+function rowRemoveAndFill(index, countPoints) {
+  if (countPoints) {
+    points.innerHTML = parseInt(points.innerHTML) + crush3Points
+  }
   for (let i = index; i >= 0; i -= width) {
     const first = cells[i].classList[0]
     const second = cells[i + 1].classList[0]
@@ -401,6 +405,7 @@ function rowRemoveAndFill(index) {
       console.log(i, first, second, third, 'in row')
       cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
       randomColorFill(arrayOfThree)
+
     } else {
 
       const newFirst = cells[i - width].classList[0]
@@ -419,8 +424,10 @@ function rowRemoveAndFill(index) {
 }
 
 // column remove and fill
-function columnRemoveAndFill(index) {
-
+function columnRemoveAndFill(index, countPoints) {
+  if (countPoints) {
+    points.innerHTML = parseInt(points.innerHTML) + crush3Points
+  }
   for (let i = index; i >= 0; i -= (width * 3)) {
 
     const first = cells[i].classList[0]
