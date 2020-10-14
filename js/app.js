@@ -8,6 +8,8 @@ const cells = []
 let selected = -1
 const colors = ['red', 'green', 'blue']
 const crush3Points = 3
+let startTime = 6
+
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
@@ -20,7 +22,7 @@ for (let i = 0; i < width ** 2; i++) {
 }
 // fill every cell with random colors
 function randomColorFill(array) {
-  array.forEach((cell, i) => {
+  array.forEach((cell) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length)
     const randomColor = colors[randomColorIndex]
     cell.classList.add(randomColor)
@@ -58,10 +60,24 @@ function checkCrushFill(countPoints) {
 // start button event listener
 start.addEventListener('click', () => {
   randomColorFill(cells)
-  // setTimeout(() => match3AndFillR(), 3000)
   checkCrushFill(false)
   disableBtn()
-
+  let intervalId = 0
+  if (intervalId) {
+    return
+  }
+  intervalId = setInterval(() => {
+    if (startTime === 0) {
+      clearInterval(intervalId)
+      alert(`time is up you have ${points.innerHTML} points`)
+      points.innerHTML = 0
+    } else {
+      // Decrease my timer every second
+      startTime--
+      console.log('running timer')
+      time.innerHTML = startTime
+    }
+  }, 1000)
 })
 
 
