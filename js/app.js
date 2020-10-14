@@ -71,6 +71,120 @@ reset.addEventListener('click', () => {
 
 
 
+function neighbourCheck(firstId, secondId) {
+  return secondId === firstId + 1
+    || secondId === firstId - 1
+    || secondId === firstId + width
+    || secondId === firstId - width
+}
+// let colorCheck = false
+// const arrayCheck = [[tt, t], [t, b], [b, bb], [ll, l], [l, r], [r, rr]]
+// let i = 0
+// while (i < arrayCheck.length && colorCheck === false) {
+//   if (arrayCheck[i][0] && arrayCheck[i][1] && arrayCheck[i][0].classList[1] === color && arrayCheck[i][1].classList[1] === color) {
+//     colorCheck = true
+//   } else {
+//     colorCheck = false
+//   }
+//   i++
+// }
+
+
+function colorCheck(firstId, firstColor, secondId, secondColor) {
+  const isRow = Math.abs(firstId - secondId) === 1
+
+  if (isRow) {
+    if (firstId > secondId) {
+      return colorCheckRow(secondId, secondColor, firstId, firstColor)
+    } else {
+      return colorCheckRow(firstId, firstColor, secondId, secondColor)
+    }
+  } else {
+    if (firstId > secondId)
+      return colorCheckColumn(secondId, secondColor, firstId, firstColor)
+    else {
+      return colorCheckColumn(firstId, firstColor, secondId, secondColor)
+    }
+  }
+}
+
+function colorCheckRow(leftId, leftColor, rightId, rightColor) {
+
+  const checkAgainstLeft = [
+    [cells[rightId + 1], cells[rightId + 2]],
+    [cells[rightId - width], cells[rightId - width * 2]],
+    [cells[rightId + width], cells[rightId + width * 2]],
+    [cells[rightId + width], cells[rightId - width]]
+  ]
+
+  const checkAgainstRight = [
+    [cells[leftId - 1], cells[leftId - 2]],
+    [cells[leftId - width], cells[leftId - width * 2]],
+    [cells[leftId + width], cells[leftId + width * 2]],
+    [cells[leftId + width], cells[leftId - width]]
+  ]
+  for (let i = 0; i < checkAgainstLeft.length; i++) {
+    // console.log(checkAgainstLeft[i][0], checkAgainstLeft[i][1], i, ' check against left colors')
+    if (checkAgainstLeft[i][0] && checkAgainstLeft[i][0].classList[0] === leftColor
+      && checkAgainstLeft[i][1] && checkAgainstLeft[i][1].classList[0] === leftColor) {
+
+      return true
+    }
+
+  }
+  for (let i = 0; i < checkAgainstRight.length; i++) {
+    if (checkAgainstRight[i][0] && checkAgainstRight[i][0].classList[0] === rightColor
+      && checkAgainstRight[i][1] && checkAgainstRight[i][1].classList[0] === rightColor) {
+      return true
+    }
+
+  }
+  console.log('row', leftId, leftColor, rightId, rightColor)
+  return false
+}
+
+function colorCheckColumn(topId, topColor, bottomId, bottomColor) {
+  console.log('column', topId, topColor, bottomId, bottomColor)
+  return false
+}
+
+
+
+// function colorCheck(firstId, firstColor, secondId, secondColor) {
+//   const firstTopC = document.getElementById(firstId - width).classList[0]
+//   const firstTopPlusC = document.getElementById(firstId - width * 2).classList[0]
+//   const firstBottomC = document.getElementById(firstId + width).classList[0]
+//   const firstBottomPlusC = document.getElementById(firstId + width * 2).classList[0]
+//   const firstRightC = document.getElementById(firstId + 1).classList[0]
+//   const firstRightPlusC = document.getElementById(firstId + 2).classList[0]
+//   const firstLeftPlusC = document.getElementById(firstId - 2).classList[0]
+// const secondTopC = document.getElementById(secondId - width).classList[0]
+// const secondTopPlusC = document.getElementById(secondId - width * 2).classList[0]
+// const secondBottomC = document.getElementById(secondId + width).classList[0]
+// const secondBottomPlusC = document.getElementById(secondId + width * 2).classList[0]
+// const secondLeftC = document.getElementById(secondId - 1).classList[0]
+// const secondLeftPlusC = document.getElementById(secondId - 2).classList[0]
+
+//   let isColor = false
+//   const arrayCheck = [[firstTopPlusC, firstTopC], [firstTopC, firstBottomC], [firstBottomC, firstBottomPlusC], [firstLeftPlusC, secondColor], [secondColor, firstRightC], [firstRightC, firstRightPlusC]]
+//   let i = 0
+//   while (i < arrayCheck.length && colorCheck === false) {
+//     if (arrayCheck[i][0] && (arrayCheck[i][0] === firstColor) && (arrayCheck[i][1] === firstColor)) {
+//       isColor = true
+//     } else {
+//       isColor = false
+//     }
+//     i++
+//   }
+
+//   return isColor
+// }
+
+
+
+
+
+
 cells.forEach((cell) => {
   cell.addEventListener('click', () => {
 
@@ -85,17 +199,23 @@ cells.forEach((cell) => {
       console.log(secondColor)
       const firstCell = document.querySelector('.selected')
       const secondCell = cell
-      if (secondId === firstId + 1
-        || secondId === firstId - 1
-        || secondId === firstId + width
-        || secondId === firstId - width
-      ) {
+      //// against second color
+      // // against first color
+      // const secondTopC = document.getElementById(secondId - width).classList[0]
+      // const secondTopPlusC = document.getElementById(secondId - width * 2).classList[0]
+      // const secondBottomC = document.getElementById(secondId + width).classList[0]
+      // const secondBottomPlusC = document.getElementById(secondId + width * 2).classList[0]
+      // const secondLeftC = document.getElementById(secondId - 1).classList[0]
+      // const secondLeftPlusC = document.getElementById(secondId - 2).classList[0]
+
+
+      if (neighbourCheck(firstId, secondId) && colorCheck(firstId, firstColor, secondId, secondColor)) {
         firstCell.classList.remove(firstColor)
         firstCell.classList.add(secondColor)
 
         secondCell.classList.remove(secondColor)
         secondCell.classList.add(firstColor)
-
+        checkCrushFill()
       } else {
         secondCell.classList.add('shake')
         console.log('shake has been added')
@@ -103,10 +223,12 @@ cells.forEach((cell) => {
       }
 
       document.querySelector('.selected').classList.remove('selected')
-      checkCrushFill()
+
     } else {
       cell.classList.add('selected')
-      document.querySelector('.shake').classList.remove('shake')
+      if (document.querySelector('.shake')) {
+        document.querySelector('.shake').classList.remove('shake')
+      }
     }
 
   })
