@@ -148,6 +148,35 @@ function colorCheckRow(leftId, leftColor, rightId, rightColor) {
 
 function colorCheckColumn(topId, topColor, bottomId, bottomColor) {
   console.log('column', topId, topColor, bottomId, bottomColor)
+  const checkAgainstTop = [
+
+    [cells[bottomId + width], cells[bottomId + width * 2]],
+    [cells[bottomId + 1], cells[bottomId + 2]],
+    [cells[bottomId - 1], cells[bottomId - 2]],
+    [cells[bottomId - 1], cells[bottomId + 1]]
+  ]
+
+  const checkAgainstBottom = [
+    [cells[topId - width], cells[topId - width * 2]],
+    [cells[topId + 1], cells[topId + 2]],
+    [cells[topId - 1], cells[topId - 2]],
+    [cells[topId - 1], cells[topId + 1]]
+  ]
+
+  for (let i = 0; i < checkAgainstTop.length; i++) {
+    if (checkAgainstTop[i][0] && checkAgainstTop[i][0].classList[0] === topColor
+      && checkAgainstTop[i][1] && checkAgainstTop[i][1].classList[0] === topColor) {
+      return true
+    }
+
+  }
+  for (let i = 0; i < checkAgainstBottom.length; i++) {
+    if (checkAgainstBottom[i][0] && checkAgainstBottom[i][0].classList[0] === bottomColor
+      && checkAgainstBottom[i][1] && checkAgainstBottom[i][1].classList[0] === bottomColor) {
+      return true
+    }
+
+  }
   return false
 }
 
