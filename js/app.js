@@ -1,15 +1,14 @@
 const start = document.querySelector('#start')
 const time = document.querySelector('#time')
 const points = document.querySelector('.points')
-const reset = document.querySelector('#reset')
 const grid = document.querySelector('.grid')
-const width = 5
+const width = 8
 const cells = []
 let selected = -1
-const colors = ['red', 'green', 'blue']
+const colors = ['red', 'green', 'blue', 'pink']
 const crush3Points = 3
-let startTime = 6
-
+let startTime = 15
+const targetTime = 60
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
@@ -59,6 +58,7 @@ function checkCrushFill(countPoints) {
 
 // start button event listener
 start.addEventListener('click', () => {
+  clear()
   randomColorFill(cells)
   checkCrushFill(false)
   disableBtn()
@@ -71,6 +71,8 @@ start.addEventListener('click', () => {
       clearInterval(intervalId)
       alert(`time is up you have ${points.innerHTML} points`)
       points.innerHTML = 0
+      enableBtn()
+      startTime = targetTime
     } else {
       // Decrease my timer every second
       startTime--
@@ -80,12 +82,6 @@ start.addEventListener('click', () => {
   }, 1000)
 })
 
-
-// reset button event listener remove all classes 
-reset.addEventListener('click', () => {
-  clear()
-  enableBtn()
-})
 
 
 
@@ -199,42 +195,6 @@ function colorCheckColumn(topId, topColor, bottomId, bottomColor) {
 }
 
 
-
-// function colorCheck(firstId, firstColor, secondId, secondColor) {
-//   const firstTopC = document.getElementById(firstId - width).classList[0]
-//   const firstTopPlusC = document.getElementById(firstId - width * 2).classList[0]
-//   const firstBottomC = document.getElementById(firstId + width).classList[0]
-//   const firstBottomPlusC = document.getElementById(firstId + width * 2).classList[0]
-//   const firstRightC = document.getElementById(firstId + 1).classList[0]
-//   const firstRightPlusC = document.getElementById(firstId + 2).classList[0]
-//   const firstLeftPlusC = document.getElementById(firstId - 2).classList[0]
-// const secondTopC = document.getElementById(secondId - width).classList[0]
-// const secondTopPlusC = document.getElementById(secondId - width * 2).classList[0]
-// const secondBottomC = document.getElementById(secondId + width).classList[0]
-// const secondBottomPlusC = document.getElementById(secondId + width * 2).classList[0]
-// const secondLeftC = document.getElementById(secondId - 1).classList[0]
-// const secondLeftPlusC = document.getElementById(secondId - 2).classList[0]
-
-//   let isColor = false
-//   const arrayCheck = [[firstTopPlusC, firstTopC], [firstTopC, firstBottomC], [firstBottomC, firstBottomPlusC], [firstLeftPlusC, secondColor], [secondColor, firstRightC], [firstRightC, firstRightPlusC]]
-//   let i = 0
-//   while (i < arrayCheck.length && colorCheck === false) {
-//     if (arrayCheck[i][0] && (arrayCheck[i][0] === firstColor) && (arrayCheck[i][1] === firstColor)) {
-//       isColor = true
-//     } else {
-//       isColor = false
-//     }
-//     i++
-//   }
-
-//   return isColor
-// }
-
-
-
-
-
-
 cells.forEach((cell) => {
   cell.addEventListener('click', () => {
 
@@ -249,15 +209,6 @@ cells.forEach((cell) => {
       console.log(secondColor)
       const firstCell = cells[firstId]
       const secondCell = cell
-      //// against second color
-      // // against first color
-      // const secondTopC = document.getElementById(secondId - width).classList[0]
-      // const secondTopPlusC = document.getElementById(secondId - width * 2).classList[0]
-      // const secondBottomC = document.getElementById(secondId + width).classList[0]
-      // const secondBottomPlusC = document.getElementById(secondId + width * 2).classList[0]
-      // const secondLeftC = document.getElementById(secondId - 1).classList[0]
-      // const secondLeftPlusC = document.getElementById(secondId - 2).classList[0]
-
 
       if (neighbourCheck(firstId, secondId) && colorCheck(firstId, firstColor, secondId, secondColor)) {
         firstCell.classList.remove(firstColor)
@@ -285,19 +236,6 @@ cells.forEach((cell) => {
 
   })
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function match3AndFillR(countPoints) {
   console.log('Filling row matches')
@@ -358,8 +296,6 @@ function match3AndFillC(countPoints) {
     }
   }
 }
-
-
 //check 3 matches in rows
 function match3Row() {
   console.log('Checking row matches')
@@ -380,32 +316,24 @@ function match3Row() {
     }
   }
 }
-
 //check 3 matches in columns
 function match3Column() {
   console.log('Checking column matches')
-
   for (let i = 0; i < width ** 2; i++) {
-
     if (i >= width ** 2 - width * 2) {
       // console.log(`ignoring i ${i}`)
-
     } else {
       const first = cells[i].classList[0]
       const second = cells[i + width].classList[0]
       const third = cells[i + width * 2].classList[0]
-
       const match3C = first === second && first === third
       if (match3C) {
         // console.log(` starting from ${i}  ${first} and ${second} and ${third} are the same in the column `)
         return true
       }
-
     }
   }
-
 }
-
 // row remove and fill
 function rowRemoveAndFill(index, countPoints) {
   if (countPoints) {
@@ -421,31 +349,23 @@ function rowRemoveAndFill(index, countPoints) {
       console.log(i, first, second, third, 'in row')
       cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
       randomColorFill(arrayOfThree)
-
     } else {
-
       const newFirst = cells[i - width].classList[0]
       const newSecond = cells[(i + 1) - width].classList[0]
       const newThird = cells[(i + 2) - width].classList[0]
-
       cells[i].classList.remove(first), cells[i + 1].classList.remove(second), cells[i + 2].classList.remove(third)
       console.log(i, first, second, third)
-
       cells[i].classList.add(newFirst), cells[i + 1].classList.add(newSecond), cells[i + 2].classList.add(newThird)
       console.log(newFirst, newSecond, newThird)
     }
-
   }
-
 }
-
 // column remove and fill
 function columnRemoveAndFill(index, countPoints) {
   if (countPoints) {
     points.innerHTML = parseInt(points.innerHTML) + crush3Points
   }
   for (let i = index; i >= 0; i -= (width * 3)) {
-
     const first = cells[i].classList[0]
     const second = cells[i + width].classList[0]
     const third = cells[i + width * 2].classList[0]
@@ -453,19 +373,16 @@ function columnRemoveAndFill(index, countPoints) {
     const arrayOfThree = [cells[i], cells[i + width], cells[i + width * 2]]
     // console.log(arrayOfThree, 'column')
 
-
     // 1. special case - starting from the first row
     if (i < width) {
       // console.log(i, first, second, third, 'has been removed')
       cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
       randomColorFill(arrayOfThree)
 
-
       // 2. special case - starting from the second row
     } else if (i >= width && i < width * 2) {
       cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
       // console.log(i, first, second, third, 'has been removed')
-
       const newThird = cells[i - width].classList[0]
       cells[i + width * 2].classList.add(newThird)
       // console.log(newThird, ' added as a new third color')
@@ -474,27 +391,25 @@ function columnRemoveAndFill(index, countPoints) {
       //we copyd and removed a color from cells[i] and the rest also been removed so need a new random color
       randomColorFill([cells[i - width], cells[i], cells[i + width]])
 
-
       // 3. special case - starting from the third row
     } else if (i >= width * 2 && i < width * 3) {
-
       cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
       // console.log(i, first, second, third, 'has been removed')
-
       const newSecond = cells[i - width * 2].classList[0]
       const newThird = cells[i - width].classList[0]
-
       cells[i + width].classList.add(newSecond), cells[i + width * 2].classList.add(newThird)
       // console.log(newSecond, newThird, ' added as a new color')
-
       // remove color class from the cells from top and second row and after assign a new random color
       cells[i - width * 2].classList.remove(newSecond)
       cells[i - width].classList.remove(newThird)
       //  we copy the color from theese cells but they will need a new random color and also for the third cell (cell[i])
       randomColorFill([cells[i - width * 2], cells[i - width], cells[i]])
-
     } else {
-      console.log('else', i)
+      const newFirst = cells[i - width * 3].classList[0]
+      const newSecond = cells[i - width * 2].classList[0]
+      const newThird = cells[i - width].classList[0]
+      cells[i].classList.remove(first), cells[i + width].classList.remove(second), cells[i + width * 2].classList.remove(third)
+      cells[i].classList.add(newFirst), cells[i + width].classList.add(newSecond), cells[i + width * 2].classList.add(newThird)
     }
 
   }
