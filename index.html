@@ -4,36 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Candy Crush</title>
+
+  <title>🎈partyPop🎈</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@300;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-
-
   <header>
-    <div class="info">
-      <p>Time:</p>
-      <p id="time">60</p>
-      <p>Points: </p>
-      <p class="points"> 0 </p>
-    </div>
-    <div class='control'>
-      <button id="start">Start</button>
-    </div>
+    <h1>PartyPop</h1>
+    <p id="dialog"> </p>
+    <p id=instructions></p>
   </header>
 
   <main>
-    <div class="grid"></div>
+
+    <section class="scoreboard">
+      <h2>High Scores</h2>
+      <ol></ol>
+    </section>
+    <div class='control'>
+      <button id="start">Start</button>
+      <p class="times">Time:</p>
+      <p id="time">60</p>
+      <p class="points">Points: </p>
+      <p id="point"> 0 </p>
+    </div>
+    <section class="grid-container">
+      <div class="grid"></div>
+    </section>
   </main>
 
   <footer>
-    <section class="scoreboard">
-      <h2>High Scores</h2>
-      <h3></h3>
-      <ol></ol>
-    </section>
-
+    <audio class="audio" src="./assets/pop.wav"></audio>
   </footer>
 
 

@@ -1,17 +1,20 @@
 const start = document.querySelector('#start')
 const time = document.querySelector('#time')
-const points = document.querySelector('.points')
+const points = document.querySelector('#point')
 const grid = document.querySelector('.grid')
 const width = 8
 const cells = []
 let selected = -1
-const colors = ['red', 'green', 'blue', 'pink']
+const colors = ['red', 'green', 'blue', 'orange']
 const crush3Points = 3
-let startTime = 10
+let startTime = 6
 const targetTime = 60
 let scoresTable = []
 const scoresList = document.querySelector('ol')
 let newName = ''
+const player = document.querySelector('audio')
+const dialog = document.querySelector('#dialog')
+
 
 // create the grid
 for (let i = 0; i < width ** 2; i++) {
@@ -54,8 +57,9 @@ function checkCrushFill(countPoints) {
 // highest()
 // start button event listener
 start.addEventListener('click', () => {
-  newName = prompt('Enter your name')
+  dialog.innerHTML = ''
 
+  newName = prompt('Enter your name')
   randomColorFill(cells)
   checkCrushFill(false)
 
@@ -69,7 +73,10 @@ start.addEventListener('click', () => {
     if (startTime === 0) {
       clearInterval(intervalId)
 
-      alert(`Hey ${newName} your time is up you have ${points.innerHTML} points`)
+      dialog.innerHTML = `Hey ${newName} 
+                          your time is up 🙉 you've collected 
+                             ${points.innerHTML} points`
+
       highScores()
       points.innerHTML = 0
       clear()
@@ -77,9 +84,11 @@ start.addEventListener('click', () => {
       startTime = targetTime
 
     } else {
+
       startTime--
       console.log('running timer')
       time.innerHTML = startTime
+
     }
   }, 1000)
 })
@@ -106,9 +115,11 @@ cells.forEach((cell) => {
         secondCell.classList.add('shake')
         console.log('shake has been added')
       }
+      cells[selected].style.border = ''
       selected = -1
     } else {
       selected = parseInt(cell.id)
+      cells[selected].style.border = '2px solid green'
       console.log('Selected', selected)
       if (document.querySelector('.shake')) {
         document.querySelector('.shake').classList.remove('shake')
@@ -290,6 +301,7 @@ function match3Column() {
 // row remove and fill
 function rowRemoveAndFill(index, countPoints) {
   if (countPoints) {
+    player.play()
     points.innerHTML = parseInt(points.innerHTML) + crush3Points
   }
   for (let i = index; i >= 0; i -= width) {
@@ -315,6 +327,7 @@ function rowRemoveAndFill(index, countPoints) {
 // column remove and fill
 function columnRemoveAndFill(index, countPoints) {
   if (countPoints) {
+    player.play()
     points.innerHTML = parseInt(points.innerHTML) + crush3Points
   }
   for (let i = index; i >= 0; i -= (width * 3)) {

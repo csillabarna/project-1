@@ -3,55 +3,137 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  margin: 0
+  flex-direction: column;
+  margin: 0;
+  font-family: 'Lemonada', cursive;
+  background: linear-gradient(#042e4b85, #a14a17a1);
+  background-image: linear-gradient(rgba(230, 141, 141, 0.445), rgba(204, 155, 148, 0.692)), url(../assets/balloons.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
 }
 
-main{
+header {
   display: flex;
-  flex-direction: row;
+  align-self: flex-start;
+}
+
+h1 {
+  font-size: 7rem;
+  color: rgba(226, 85, 144, 0.61);
+  margin-left: 20%;
+  letter-spacing: 10px;
+  font-family: 'Indie Flower', cursive;
+}
+
+main {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  color: rgb(126, 54, 90);
+  font-size: 20px;
+}
+
+.control {
+  font-size: 25px;
+  font-weight: bolder;
+  text-align: center;
+  color: rgb(126, 49, 81);
+  padding: 40px;
+  margin-top: 15%;
+}
+
+p {
+  margin: 0;
+}
+
+#dialog {
+  color: rgb(98, 97, 148);
+  font-size: 50px;
+  background-color: rgba(197, 206, 166, 0.842);
+  text-align: center;
+  font-weight: bolder;
+}
+
+#start {
+  width: 120px;
+  padding: 20px;
+  border: none;
+  border-radius: 10%;
+  margin: 10px;
+  font-weight: bolder;
+  background-color: rgb(101, 165, 93);
+  color: white;
+  letter-spacing: 2px;
+  font-size: larger;
+}
+
+.grid-container {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
   width: 600px;
   height: 600px;
-  margin: 20px;
   padding: 20px;
-  background-color: rgba(238, 206, 223, 0.705);
+  border-radius: 2%;
+  border: 10px solid rgba(221, 117, 178, 0.411);
+  background: linear-gradient(#e74b3756, #9c8441a1);
+  cursor: pointer;
 }
 
 .grid {
   display: flex;
   flex-direction: row;
-  border: 2px solid rgb(70, 8, 78);
   width: 100%;
   height: 100%;
   flex-wrap: wrap;
-  background-color: rgb(250, 236, 221);
+  background: linear-gradient(#e6a69e85, #ecca6aa1);
 }
 
-main div {
+.grid div {
   width: 12.5%;
   height: 12.5%;
-  border: 1px solid rgb(2, 20, 78);
+  border: 1px solid rgba(119, 101, 101, 0.514);
 }
 
 .red {
-    background-color: rgb(212, 73, 73);
+  background-color: rgba(158, 111, 111, 0);
+  background-image: url(../assets/red.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-.blue{
-  background-color: rgb(108, 159, 226);
+.blue {
+  background-color: rgba(206, 77, 77, 0);
+  background-image: url(../assets/blue.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-.green{
-  background-color: green;
-}
-.pink{
-  background-color: palevioletred;
+.green {
+  background-color: rgba(15, 15, 15, 0);
+  background-image: url(../assets/green.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
+.orange {
+  background-color: rgba(15, 15, 15, 0);
+  background-image: url(../assets/orange.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 
 .shake {
   animation: shake 0.5s;
@@ -61,60 +143,13 @@ main div {
   10%, 90% {
     transform: translateX(-1px);
   }
-
   20%, 80% {
     transform: translateX(2px);
   }
-
   30%, 50%, 70% {
     transform: translateX(-4px);
   }
-
   40%, 60% {
     transform: translateX(4px);
   }
 }
-
-
-
-.info{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  margin: 15px;
-}
-
-#time{
-  padding: 10px;
-   margin: 15px;
-}
-
-.control{
-  display: flex;
-  justify-content: space-between;
-  align-self: center;
-  width: 100%;
-}
-#start, #reset {
-  width: 100px;
-  padding: 15px;
-  border: none;
-  border-radius: 10%;
-  margin: 5px;
-  font-weight: bolder;
-  letter-spacing: 1px;
-  color: rgb(28, 28, 97);
-}
-
-#reset {
-  background-color: khaki;
-}
-#start{
-  background-color: rgb(211, 241, 161);
-}
-
-
-
-
