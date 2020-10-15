@@ -7,7 +7,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0
 }
 
@@ -114,3 +114,7 @@ main div {
 #start{
   background-color: rgb(211, 241, 161);
 }
+
+
+
+
