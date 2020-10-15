@@ -7,13 +7,14 @@ const cells = []
 let selected = -1
 const colors = ['red', 'green', 'blue', 'orange']
 const crush3Points = 3
-let startTime = 6
+let startTime = 60
 const targetTime = 60
 let scoresTable = []
 const scoresList = document.querySelector('ol')
 let newName = ''
 const player = document.querySelector('audio')
 const dialog = document.querySelector('#dialog')
+const inst = document.querySelector('#instructions')
 
 
 // create the grid
@@ -54,11 +55,11 @@ function checkCrushFill(countPoints) {
     match3AndFillC(countPoints)
   }
 }
-// highest()
+
 // start button event listener
 start.addEventListener('click', () => {
   dialog.innerHTML = ''
-
+  inst.style.display = 'none'
   newName = prompt('Enter your name')
   randomColorFill(cells)
   checkCrushFill(false)
@@ -73,9 +74,7 @@ start.addEventListener('click', () => {
     if (startTime === 0) {
       clearInterval(intervalId)
 
-      dialog.innerHTML = `Hey ${newName} 
-                          your time is up 🙉 you've collected 
-                             ${points.innerHTML} points`
+      dialog.innerHTML = `${newName} ⏱ time is up 🙉 you've collected ${points.innerHTML} points`
 
       highScores()
       points.innerHTML = 0
@@ -92,6 +91,8 @@ start.addEventListener('click', () => {
     }
   }, 1000)
 })
+
+// cells eventlistener
 cells.forEach((cell) => {
   cell.addEventListener('click', () => {
     if (selected >= 0) {
@@ -403,14 +404,3 @@ function orderAndDisplayScores() {
     })
   scoresList.innerHTML = array.join('')
 }
-
-// function highest() {
-//   const array = scoresTable
-//     .sort((playerA, playerB) => playerB.score - playerA.score)
-//     .map(player => {
-//       return `<li>
-//         ${player.name} has ${player.score} points
-//       </li>`
-//     })
-//   scoresList.innerHTML = array[0]
-// }
