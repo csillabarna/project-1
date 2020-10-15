@@ -176,3 +176,29 @@ p {
     transform: translateX(4px);
   }
 }
+
+@media only screen and (max-width: 600px) {
+  main {
+    flex-direction: column;
+  }
+  #dialog, #instructions {
+    font-size: 18px;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  .grid-container {
+    width: 400px;
+    height: 400px;
+  }
+  .control {
+    font-size: 15px;
+  }
+  #dialog {
+    text-align: center;
+    font-weight: bolder;
+    padding: 5px;
+    margin-top: 55%;
+    margin-left: -85%;
+  }
+}
