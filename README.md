@@ -133,7 +133,7 @@ In terms of future improvements, I would like to implement some more levels whic
 - add music/more effects
 
 ## Summary
-I feel as though there is certainly more work that can be done on the project, largely focusing on minimizing hardcoded areas so that the difficulty or the map can be changed at ease without breaking anything.
-Overall I had a lot of fun building the game, it certainly had its challenges as there are quite a lot of things going on in the same time. It was important to avoid using any frameworks so I could build a stronger foundation of the core HTML, CSS and JS skills.
+I feel there is certainly more work that can be done on the project, largely focusing on minimizing hardcoded areas so that the difficulty or the map can be changed at ease without breaking anything.
+Overall I had a lot of fun building the game :) definitely  had its challenges as there are quite a lot of things going on in the same time. This project is an important part of building a stronger foundation of my HTML, CSS and JS skills.
 
 
