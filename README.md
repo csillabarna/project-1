@@ -6,7 +6,7 @@
 This was a solo project for one week duration. The idea was to re-create an existing game using only HTML, CSS and vanilla JavaScript. Therefore I haven't use any frameworks or pre-built components. This made sure to creat logic from scratch and to get comfortable with JavaScript and DOM relationship.
 I decided to make a Candy Crush inspired project as my first of the Software Engineering Immersive course at General Assembly London. 
 
-You can find my deployed game here: [partyPop🎈](csillabarna.github.io/project-1/)
+You can find my deployed game here: [partyPop🎈](https://csillabarna.github.io/project-1/)
 
 
 ## Brief
