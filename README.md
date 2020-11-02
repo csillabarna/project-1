@@ -54,7 +54,7 @@ repeat until there is no more crushes
           and  remove the 'clicked' class from the first click target cell
 
 6. make timer with setInterval()
-7. maek score counter
+7. make score counter
 8. display score in the end of the game
 9. add start button with all functionality
 10. high score table with localstorage
@@ -111,12 +111,15 @@ function colorCheckRow(leftId, leftColor, rightId, rightColor) {
     [cells[rightId + width], cells[rightId + width * 2]],
     [cells[rightId + width], cells[rightId - width]]
   ]
-
-  for (let i = 0; i < checkAgainstTop.length; i++) {
-    if (checkAgainstTop[i][0] && checkAgainstTop[i][0].classList[0] === topColor
-      && checkAgainstTop[i][1] && checkAgainstTop[i][1].classList[0] === topColor) {
+  
+for (let i = 0; i < checkAgainstRight.length; i++) {
+    if (checkAgainstRight[i][0] && checkAgainstRight[i][0].classList[0] === rightColor
+      && checkAgainstRight[i][1] && checkAgainstRight[i][1].classList[0] === rightColor) {
       return true
     }
+  }
+  return false
+}
 ```
 
 ![start grid with random balloons](./assets/screenshots/second.jpg)
@@ -135,5 +138,6 @@ In terms of future improvements, I would like to implement some more levels whic
 ## Summary
 I feel as though there is certainly more work that can be done on the project, largely focusing on minimizing hardcoded areas so that the difficulty or the map can be changed at ease without breaking anything.
 Overall I had a lot of fun building the game, it certainly had its challenges as there are quite a lot of things going on in the same time. It was important to avoid using any frameworks so I could build a stronger foundation of the core HTML, CSS and JS skills.
+
 
 
