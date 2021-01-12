@@ -29,6 +29,7 @@ You can find my deployed game here: [partyPop🎈](https://csillabarna.github.io
 Candy Crush is a game where players swap colored pieces of candy on the board to make a match - of three or more of the same color in either a row or column. Players can only swap candies on the board as long as it will make a 'crush'. They can't swap two candies if it won't create a row or column of candies of the same color. New random candies are generated at the top so there is a continuous fall.
  
 I've given my game a creative spin of a  balloon design.
+
  ![game](./assets/partyPop.gif)
 
 ## Approach
