@@ -94,7 +94,13 @@ function colorCheckRow(leftId, leftColor, rightId, rightColor) {
 In terms of future improvements, I would like to implement some more levels which increase in difficulty and also add some of the special candies that come with crashing more than 3 candies in one go.
 - change click to drag & drop
 - add music/more effects
- 
+
+## Lessons Learned
+ - make mistakes and how to correct them - debugging 
+ - use `DOM manipulation` more comfortably 
+ - project management, working to deadlines
+ - deploy project on GitHub
+
 ## Summary
 I feel there is certainly more work that can be done on the project, largely focusing on minimizing hardcoded areas so that the difficulty or the map can be changed at ease without breaking anything.
 
